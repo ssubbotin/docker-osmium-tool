@@ -1,6 +1,8 @@
-FROM ubuntu:22.04 AS builder
+FROM ubuntu:20.04 AS builder
 
 MAINTAINER Sergey Subbotin <ssubbotin@gmail.com>
+
+ARG DEBIAN_FRONTEND=noninteractive
 
 ENV PROTOZERO_VERSION 1.7.1
 ENV OSMIUM_VERSION 2.19.0
@@ -63,7 +65,7 @@ RUN wget https://github.com/osmcode/osmium-tool/archive/v${OSMIUM_TOOL_VERSION}.
  && cd /build \
  && rm -rf osmium-tool
 
-FROM ubuntu:22.04
+FROM ubuntu:20.04
 
 RUN apt-get update \
  && apt-get -q -y --no-install-recommends install \
@@ -76,5 +78,4 @@ RUN apt-get update \
 COPY --from=builder /usr/local/bin/osmium /usr/local/bin/osmium
 
 WORKDIR /data
-
 ENTRYPOINT ["/usr/local/bin/osmium"]
