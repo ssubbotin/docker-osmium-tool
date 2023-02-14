@@ -75,4 +75,6 @@ RUN apt-get update \
 
 COPY --from=builder /usr/local/bin/osmium /usr/local/bin/osmium
 
+WORKDIR /data
+
 ENTRYPOINT ["/usr/local/bin/osmium"]
